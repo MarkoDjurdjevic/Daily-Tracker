@@ -10,6 +10,11 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./question/question.module').then(m => m.QuestionModule),
       },
       {
+        path: 'user-activities',
+        data: { pageTitle: 'dailyTrackerApp.userActivity.home.title' },
+        loadChildren: () => import('./user-activities/activities.module').then(m => m.ActivitiesModule),
+      },
+      {
         path: 'user-question',
         data: { pageTitle: 'dailyTrackerApp.userQuestion.home.title' },
         loadChildren: () => import('./user-question/user-question.module').then(m => m.UserQuestionModule),
