@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- question.component.html -->
+
+    <!-- question.component.html -->
+
+    <h1>List of Questions</h1>
+
+    <div class="question-list">
+      <div *ngFor="let question of questions" class="question-item">
+        <p class="question-id">ID: {{ question.id }}</p>
+        <p class="question-text">Question: {{ question.question }}</p>
+      </div>
+    </div>
+  </body>
+</html>

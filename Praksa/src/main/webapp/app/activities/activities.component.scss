@@ -1,0 +1,31 @@
+/* question.component.scss */
+
+/* Style the list container */
+.question-list {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+/* Style each question item */
+.question-item {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the question ID */
+.question-id {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Style the question text */
+.question-text {
+  color: #666;
+}

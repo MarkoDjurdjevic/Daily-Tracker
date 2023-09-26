@@ -1,0 +1,41 @@
+
+  entity Question {
+	question String
+}
+
+entity UserQuestion {
+
+}
+
+relationship OneToOne {
+	UserQuestion{user} to User
+}
+
+relationship OneToOne {
+	UserQuestion{question} to Question
+}
+
+entity Answer {
+    result Integer
+    date  LocalDate
+}
+
+relationship ManyToOne{
+	Answer{user} to User
+}
+
+relationship OneToOne{
+	Answer{question} to Question
+}
+
+entity User {
+	email String
+    password String
+    name String
+}
+
+
+
+
+
+

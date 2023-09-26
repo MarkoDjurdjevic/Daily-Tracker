@@ -1,0 +1,28 @@
+{
+  "applications": "*",
+  "changelogDate": "20230925123602",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "user_question",
+  "fields": [],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "UserQuestion",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "question",
+      "ownerSide": true,
+      "relationshipName": "question",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}
