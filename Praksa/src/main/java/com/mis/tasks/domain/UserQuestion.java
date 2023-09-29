@@ -23,11 +23,14 @@ public class UserQuestion implements Serializable {
     private Long id;
 
     @OneToOne
-    @JoinColumn(unique = true)
+    @JoinColumn(unique = false)
     private User user;
 
+    @Column(name = "ordinalNumber")
+    private int ordinalNumber;
+
     @OneToOne
-    @JoinColumn(unique = true)
+    @JoinColumn(unique = false)
     private Question question;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

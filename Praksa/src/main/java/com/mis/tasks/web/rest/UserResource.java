@@ -2,6 +2,7 @@ package com.mis.tasks.web.rest;
 
 import com.mis.tasks.config.Constants;
 import com.mis.tasks.domain.User;
+import com.mis.tasks.repository.UserQuestionRepository;
 import com.mis.tasks.repository.UserRepository;
 import com.mis.tasks.security.AuthoritiesConstants;
 import com.mis.tasks.service.MailService;

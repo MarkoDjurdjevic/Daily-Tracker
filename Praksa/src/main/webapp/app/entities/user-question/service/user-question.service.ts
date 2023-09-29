@@ -18,6 +18,14 @@ export class UserQuestionService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
+  //dodato
+  getUserQuestionsForCurrentUser(): Observable<EntityArrayResponseType> { 
+    return this.http.get<IUserQuestion[]>(`api/user-questions-for-current-user`, {observe: 'response' });
+  }
+  
+
+  //
+
   create(userQuestion: NewUserQuestion): Observable<EntityResponseType> {
     return this.http.post<IUserQuestion>(this.resourceUrl, userQuestion, { observe: 'response' });
   }

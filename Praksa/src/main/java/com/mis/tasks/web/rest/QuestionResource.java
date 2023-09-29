@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -167,6 +169,9 @@ public class QuestionResource {
      * @param id the id of the question to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+
+
+
     @DeleteMapping("/questions/{id}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable Long id) {
         log.debug("REST request to delete Question : {}", id);

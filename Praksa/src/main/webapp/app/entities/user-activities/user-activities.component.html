@@ -1,1 +1,27 @@
-<p>user-activities works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li *ngFor="let  question of currentUserQuestions" class="question-item">
+          <span> 1. {{ question.question.question }}</span>
+        </li>
+      </ul>
+     
+      <button class="btn btn-primary show-form-button" type="submit" (click)="showForm = true">Kreiraj Pitanje</button>
+
+      <form class="form-question"   *ngIf="showForm" (submit)="createQuestion(form)" #form = "ngForm">
+        <button type="submit" (click)="showForm = false" class="btn btn-danger">X</button>
+       <label for="Question">Question</label>
+       <input type="text">
+      </form>
+
+      
+      
+    
+</body>
+</html>

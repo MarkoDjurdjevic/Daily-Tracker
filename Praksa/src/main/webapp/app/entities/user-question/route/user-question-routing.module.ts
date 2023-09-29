@@ -41,6 +41,7 @@ const userQuestionRoute: Routes = [
     },
     canActivate: [UserRouteAccessService],
   },
+  
 ];
 
 @NgModule({

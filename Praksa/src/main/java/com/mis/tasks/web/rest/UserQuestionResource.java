@@ -1,5 +1,6 @@
 package com.mis.tasks.web.rest;
 
+import com.mis.tasks.domain.Question;
 import com.mis.tasks.domain.UserQuestion;
 import com.mis.tasks.repository.UserQuestionRepository;
 import com.mis.tasks.web.rest.errors.BadRequestAlertException;
@@ -8,10 +9,17 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -143,6 +151,36 @@ public class UserQuestionResource {
         log.debug("REST request to get all UserQuestions");
         return userQuestionRepository.findAll();
     }
+
+
+
+    //DODAJEM
+
+    @GetMapping("/user-questions-for-current-user")
+    public ResponseEntity<List<UserQuestion>> getUserQuestionsForCurrentUser() {
+
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            // Dohvati username trenutnog korisnika
+            String username = userDetails.getUsername();
+
+            // Koristi metodu findByUserLogin iz UserQuestionRepository da dohvati pitanja za trenutnog korisnika
+            List<UserQuestion> userQuestions = userQuestionRepository.findByUserLogin(username);
+
+
+            return ResponseEntity.ok(userQuestions);
+        } else {
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
+
+    //Dodajem
 
     /**
      * {@code GET  /user-questions/:id} : get the "id" userQuestion.

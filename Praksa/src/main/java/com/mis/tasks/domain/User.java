@@ -5,6 +5,7 @@ import com.mis.tasks.config.Constants;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import javax.persistence.*;
@@ -31,7 +32,6 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
-
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)

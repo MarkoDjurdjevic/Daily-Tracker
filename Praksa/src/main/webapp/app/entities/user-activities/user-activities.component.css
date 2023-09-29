@@ -1,0 +1,23 @@
+/* Stilizovanje svakog pojedinačnog pitanja u listi */
+ul {
+    list-style-type: none; /* Uklanja tačke ili brojeve iz liste */
+    padding: 0;
+  }
+  
+  li {
+    margin: 10px 0;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Stilizovanje teksta pitanja */
+  li span {
+    font-weight: bold;
+  }
+
+ 
+  
+  /* Dodatni stilovi prema vašim željama */
+  

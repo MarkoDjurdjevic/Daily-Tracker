@@ -45,10 +45,17 @@ spring:
   liquibase:
     contexts: prod
   mail:
-    host: localhost
-    port: 25
-    username:
-    password:
+    host: smtp.gmail.com
+    port: 465
+    username: djurdjevicmarko823@gmail.com  #Replace this field with your Gmail username.
+    password: jbir xqmf pcqt dnbt      #Replace this field with your Gmail password.
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+      auth: true
+      ssl.enable: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
   thymeleaf:
     cache: true
 
