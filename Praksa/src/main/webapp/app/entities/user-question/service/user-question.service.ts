@@ -22,7 +22,11 @@ export class UserQuestionService {
   getUserQuestionsForCurrentUser(): Observable<EntityArrayResponseType> { 
     return this.http.get<IUserQuestion[]>(`api/user-questions-for-current-user`, {observe: 'response' });
   }
-  
+
+
+  createUserQuestionImmediatly(userQuestion: any): Observable<any> {
+    return this.http.post<any>(`api/user-questions-immediatly`, userQuestion, { observe: 'response' });
+  }
 
   //
 

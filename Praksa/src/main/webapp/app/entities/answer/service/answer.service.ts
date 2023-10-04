@@ -38,6 +38,13 @@ export class AnswerService {
       .pipe(map(res => this.convertResponseFromServer(res)));
   }
 
+  createAnswer(answer: any): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(answer);
+    return this.http
+      .post<RestAnswer>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map(res => this.convertResponseFromServer(res)));
+  }
+
   update(answer: IAnswer): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(answer);
     return this.http

@@ -22,13 +22,12 @@ public class UserQuestion implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name= "serial_number")
+    private Integer serialNumber;
+
     @OneToOne
     @JoinColumn(unique = false)
     private User user;
-
-    @Column(name = "ordinalNumber")
-    private int ordinalNumber;
-
     @OneToOne
     @JoinColumn(unique = false)
     private Question question;

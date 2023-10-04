@@ -1,7 +1,9 @@
 package com.mis.tasks.web.rest;
 
 import com.mis.tasks.domain.Question;
+import com.mis.tasks.domain.UserQuestion;
 import com.mis.tasks.repository.QuestionRepository;
+import com.mis.tasks.repository.UserQuestionRepository;
 import com.mis.tasks.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,9 +37,11 @@ public class QuestionResource {
     private String applicationName;
 
     private final QuestionRepository questionRepository;
+    private final UserQuestionRepository userQuestionRepository;
 
-    public QuestionResource(QuestionRepository questionRepository) {
+    public QuestionResource(QuestionRepository questionRepository, UserQuestionRepository userQuestionRepository) {
         this.questionRepository = questionRepository;
+        this.userQuestionRepository = userQuestionRepository;
     }
 
     /**
@@ -54,11 +58,36 @@ public class QuestionResource {
             throw new BadRequestAlertException("A new question cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Question result = questionRepository.save(question);
+        log.info(String.valueOf(result));
         return ResponseEntity
             .created(new URI("/api/questions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
+
+    @PostMapping("/user-questions-immediatly")
+    public ResponseEntity<UserQuestion> createUserQuestion(@RequestBody UserQuestion userQuestion) throws URISyntaxException {
+        log.debug("REST request to save UserQuestion : {}", userQuestion);
+        if (userQuestion.getId() != null) {
+            throw new BadRequestAlertException("A new userQuestion cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        Question question = userQuestion.getQuestion();
+        question = questionRepository.save(question);
+
+
+        userQuestion.setQuestion(question);
+
+        // Sada sačuvajte UserQuestion
+        UserQuestion result = userQuestionRepository.save(userQuestion);
+
+        return ResponseEntity
+            .created(new URI("/api/user-questions/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+
+
 
     /**
      * {@code PUT  /questions/:id} : Updates an existing question.

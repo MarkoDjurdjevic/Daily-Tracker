@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 /**
  * REST controller for managing {@link com.mis.tasks.domain.UserQuestion}.
  */
@@ -65,6 +67,10 @@ public class UserQuestionResource {
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
+
+
+
+
 
     /**
      * {@code PUT  /user-questions/:id} : Updates an existing userQuestion.

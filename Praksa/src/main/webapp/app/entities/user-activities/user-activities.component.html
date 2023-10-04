@@ -7,21 +7,24 @@
 </head>
 <body>
     <ul>
-        <li *ngFor="let  question of currentUserQuestions" class="question-item">
-          <span> 1. {{ question.question.question }}</span>
+      <button class="btn btn-primary" (click)="previousDay()">Prethodni dan</button>
+      <span>{{ currentDate | date: 'dd.MM.yyyy' }}</span>
+      <button class="btn btn-primary" (click)="nextDay()">Sledeći dan</button>
+        <li class="left-check-parent" *ngFor="let  question of currentUserQuestions; let i = index" class="question-item">
+          <span> {{ i + 1 }}. {{ question.question.question }} <input class="left-check" type="checkbox" (change) = "submitAnswer($event, question.question.question)"></span>
         </li>
       </ul>
+      
      
       <button class="btn btn-primary show-form-button" type="submit" (click)="showForm = true">Kreiraj Pitanje</button>
 
-      <form class="form-question"   *ngIf="showForm" (submit)="createQuestion(form)" #form = "ngForm">
-        <button type="submit" (click)="showForm = false" class="btn btn-danger">X</button>
-       <label for="Question">Question</label>
-       <input type="text">
+      <form class="form-question" *ngIf="showForm" (ngSubmit)="createQuestion(form)" #form="ngForm">
+        <button (click)="showForm = false" class="btn btn-danger">X</button>
+        <label for="questionText">Question</label>
+        <input type="text" id="questionText"  name="newQuestionText" ngModel required>
+        <button type="submit" class="btn btn-success">OK</button>
       </form>
 
-      
-      
-    
+ 
 </body>
 </html>
