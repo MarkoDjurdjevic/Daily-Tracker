@@ -10,8 +10,8 @@
       <button class="btn btn-primary" (click)="previousDay()">Prethodni dan</button>
       <span>{{ currentDate | date: 'dd.MM.yyyy' }}</span>
       <button class="btn btn-primary" (click)="nextDay()">Sledeći dan</button>
-        <li class="left-check-parent" *ngFor="let  question of currentUserQuestions; let i = index" class="question-item">
-          <span> {{ i + 1 }}. {{ question.question.question }} <input class="left-check" type="checkbox" (change) = "submitAnswer($event, question.question.question)"></span>
+        <li class="left-check-parent" *ngFor="let  question of currentUserQuestions; let i = index" class="question-item" [ngClass]="{ 'green-background': isItChecked(question.question.id) }">
+          <span> {{ i + 1 }}. {{ question.question.question }} <input class="left-check" type="checkbox" (change) = "submitAnswer($event, question.question)" [checked]="isItChecked(question.question.id)"></span> <!-- .question-->
         </li>
       </ul>
       

@@ -39,11 +39,10 @@ export class AnswerService {
   }
 
   createAnswer(answer: any): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(answer);
     return this.http
-      .post<RestAnswer>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
-  }
+        .post<RestAnswer>(`${this.resourceUrl}/create`, answer, { observe: 'response' })
+        .pipe(map(res => this.convertResponseFromServer(res)));
+}
 
   update(answer: IAnswer): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(answer);

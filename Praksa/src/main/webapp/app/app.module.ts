@@ -26,6 +26,7 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { UserActivitiesComponent } from './entities/user-activities/user-activities.component';
+import { UserGraphsComponent } from './entities/user-graphs/user-graphs.component';
 
 @NgModule({
   imports: [

@@ -1,7 +1,9 @@
 package com.mis.tasks.web.rest;
 
 import com.mis.tasks.domain.Answer;
+import com.mis.tasks.domain.Question;
 import com.mis.tasks.repository.AnswerRepository;
+import com.mis.tasks.repository.QuestionRepository;
 import com.mis.tasks.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
+
+import javax.persistence.EntityNotFoundException;
 
 /**
  * REST controller for managing {@link com.mis.tasks.domain.Answer}.
@@ -33,9 +37,11 @@ public class AnswerResource {
     private String applicationName;
 
     private final AnswerRepository answerRepository;
+    private final QuestionRepository questionRepository;
 
-    public AnswerResource(AnswerRepository answerRepository) {
+    public AnswerResource(AnswerRepository answerRepository, QuestionRepository questionRepository) {
         this.answerRepository = answerRepository;
+        this.questionRepository = questionRepository;
     }
 
     /**
@@ -52,6 +58,26 @@ public class AnswerResource {
             throw new BadRequestAlertException("A new answer cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Answer result = answerRepository.save(answer);
+        return ResponseEntity
+            .created(new URI("/api/answers/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    //Moja metoda
+    @PostMapping("/answers/create")
+    public ResponseEntity<Answer> createAnswer1(@RequestBody Answer answer) throws URISyntaxException {
+        log.debug("REST request to save Answer : {}", answer);
+        if (answer.getId() != null) {
+            throw new BadRequestAlertException("A new answer cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        String questionText = answer.getQuestion().getQuestion();
+        Question question = questionRepository.findByQuestion(questionText)
+            .orElseThrow(() -> new EntityNotFoundException("Question not found with text: " + questionText));
+
+        answer.setQuestion(question);
+        Answer result = answerRepository.save(answer);
+
         return ResponseEntity
             .created(new URI("/api/answers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

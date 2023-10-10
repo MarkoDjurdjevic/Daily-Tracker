@@ -6,7 +6,7 @@ export interface IAnswer {
   id: number;
   result?: number | null;
   date?: dayjs.Dayjs | null;
-  question?: Pick<IQuestion, 'id'> | null;
+  question?: any; //Pick<IQuestion, 'id'> | null;
   user?: Pick<IUser, 'id'> | null;
 }
 

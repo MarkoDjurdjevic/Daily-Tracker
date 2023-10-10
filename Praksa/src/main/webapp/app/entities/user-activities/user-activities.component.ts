@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AnswerService } from '../answer/service/answer.service';
 import dayjs from 'dayjs';
+import { IAnswer } from '../answer/answer.model';
 
 
 
@@ -25,6 +26,7 @@ export class UserActivitiesComponent implements OnInit {
 
   currentUser: any;
   currentUserQuestions: any;
+  currentUserAnswers: IAnswer[] = [];
   private resourceUrl = '/api/questions';
   showForm: boolean = false;
   isChecked: boolean = false;
@@ -36,28 +38,40 @@ export class UserActivitiesComponent implements OnInit {
   }
 
   load(){
-    
+    //dobijanje usera
     this.accountService.getAuthenticationState().subscribe(
       (res) =>{
         console.log(res);
         this.currentUser = res;
-        console.log(this.currentUser.id)
       },(error) =>{
       console.log("desila se greska");
       }
     )
-    
+    // dobijanje user questiona
     this.userQuestionService.getUserQuestionsForCurrentUser().subscribe(
       (res) => {
-        console.log(res);
         this.currentUserQuestions = res.body;
         console.log(this.currentUserQuestions);
-        
       },
       (error) => {
         console.log("Desila se neka greška",error);
       }
     ); 
+    // dobijanje odgovora
+      this.answerService.query().subscribe(
+        (res) => {
+          if(res.body){
+            const filteredAnswers = res.body.filter(answer => answer.user && answer.user.id === this.currentUser.id);
+            this.currentUserAnswers = filteredAnswers;
+            console.log("Odgovori",filteredAnswers);
+          }
+          
+          
+        },(error)=> {
+          console.log("Error",error)
+        }
+      )
+    
   }
   //createUserQuestionImmediatly
 
@@ -109,20 +123,51 @@ export class UserActivitiesComponent implements OnInit {
     if(event.target.checked === true){
      const answer =  {
       result: 1,
-      date: dayjs(this.currentDate).format('YYYY-MM-DD'),
+      date: dayjs(this.currentDate).format("YYYY-MM-DD"),
       user: this.currentUser,
       question: {
-        question: question1
+        question: question1.question
       }
      }
      console.log(answer)
      console.log(`Checkbox is checked`)
-     //this.answerService.create(answer)
+     this.answerService.createAnswer(answer).subscribe((res)=>{
+      console.log(`RESPONSE`, res);
+     },(error)=>{
+      console.log("Error:",error);
+     })
     } else {
       console.log("checkbox isn't checked")
+      const answer = this.currentUserAnswers.find(answer => answer.question && answer.question.id === question1.id);
+      const answerId: number | undefined = answer?.id;
+      console.log(`answer Id: `,answerId);
+      console.log("question id", question1.id);
+
+      if(answerId != undefined){
+        this.answerService.delete(answerId).subscribe(
+          (res)=> {
+            console.log("Uspesno obrisan odgovor:",res);
+          },(error)=>{
+            console.log("desila se neka greska",error);
+          }
+        )
+      }
+      
+      
+      
     }
 
   }
+
+  isItChecked(questionId: number): boolean {
+    const formattedCurrentDate  = dayjs(this.currentDate).format('YYYY-MM-DD');
+    //console.log(`Ovo je trenutni datum:`,formattedCurrentDate);
+    const dateValue = this.currentUserAnswers[0]?.date?.format('YYYY-MM-DD');
+    //console.log(`Ovo je date dayJS: `,dateValue);
+    return this.currentUserAnswers.some(answer => answer.question && answer.question.id === questionId && answer?.date?.format('YYYY-MM-DD') === formattedCurrentDate);
+  }
+
+
 
   
 }
